@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}To-Do one | Edit Item{% endblock %}
+{% block content %}
+    {% if item %}
+        {{ item.question }}
+        <form class="form-inline my-2 my-lg-0" method="POST">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" placeholder="{{ item.question }}" value="{{ item.question }}" aria-label="Search" name="question">
+          <input class="form-control mr-sm-2" type="search" placeholder="{{ item.answer }}" value="{{ item.answer }}" aria-label="Search" name="answer">
+          <input class="form-control mr-sm-2" type="search" placeholder="{{ item.comment }}" value="{{ item.comment }}" aria-label="Search" name="comment">
+          <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Edit one</button>
+          <input type="hidden" value="{{ item.completed }}" name="completed" >
+        </form>
+    {% endif %}
+
+{% endblock %}
