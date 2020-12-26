@@ -4,6 +4,7 @@
 <html lang="en">
   <head>
     
+    
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,8 +18,8 @@
   <body>
 
       <!-- 追加 -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'home' %}">To-Do one</a>
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0054a7">
+        <a class="navbar-brand" href="{% url 'home' %}" style="color: #e6e500">一問一答</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -29,8 +30,11 @@
                 {% csrf_token %}
                 <input class="form-control mr-sm-2" type="search" placeholder="question" aria-label="Search" name="question">
                 <input class="form-control mr-sm-2" type="search" placeholder="answer" aria-label="Search" name="answer">
+                <input class="form-control mr-sm-2" type="search" placeholder="dAnswer_2" aria-label="Search" name="dAnswer_2">
+                <input class="form-control mr-sm-2" type="search" placeholder="dAnswer_3" aria-label="Search" name="dAnswer_3">
+                <input class="form-control mr-sm-2" type="search" placeholder="dAnswer_4" aria-label="Search" name="dAnswer_4">
                 <input class="form-control mr-sm-2" type="search" placeholder="comment" aria-label="Search" name="comment">
-                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Add To one_one</button>
+                <button class="Button-style" style="color: #e6e500; margin-top: 10px;"　type="submit">問題を追加</button>
             </form>
           </div>
        </nav>

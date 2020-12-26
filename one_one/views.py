@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import one
 from .forms import oneForm
 from django.contrib import messages
+import json
+from django.core import serializers
 
 def home(request):
 
@@ -44,3 +46,25 @@ def edit(request, one_id):
     else:
         instance = one.objects.get(pk=one_id)
         return render(request, 'edit.html', {'item': instance})
+
+def test(request):
+
+    if request.method == 'POST':
+        form = oneForm(request.POST or None)
+
+        if form.is_valid():
+            form.save()
+            all_items = one.objects.all
+            messages.success(request, ('Item Has Been  one'))
+            
+            return render(request, 'home.html', {'all_items': all_items})
+        else:
+            all_items = one.objects.all
+            return render(request, 'home.html', {'all_items': all_items})
+
+
+    else:
+        s = one.objects.order_by('?')[:5]
+        post_list = serializers.serialize('json', s)
+        print(s)
+        return render(request, 'test.html', {'json_five_data': post_list})

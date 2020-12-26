@@ -17,12 +17,20 @@
     {% endfor 1%}
 {% endif %}
 
-
     {% if all_items %}
+
+    <td><center><a href="{% url 'test'  %}"><div class="bg-warning rounded">一問一答へ</div></a></center></td>
+
+
+
     <table class="table table-bordered">
         <tr class="table-primary">
             <th>問題</th>
             <th><center>答え</center></th>
+            <th><center>選択肢1</center></th>
+            <th><center>選択肢2</center></th>
+            <th><center>選択肢3</center></th>
+            <th><center>選択肢4</center></th>
             <th><center>解説</center></th>
             <th><center>削除</center></th>
         </tr>
@@ -31,6 +39,9 @@
         <tr class="table-info">
             <td><a href="{% url 'edit' one.id %}">{{ one.question }}</a></td>
             <td><center>{{ one.answer }}</center></li>
+            <td><center>{{ one.dAnswer_2 }}</center></li>
+            <td><center>{{ one.dAnswer_3 }}</center></li>
+            <td><center>{{ one.dAnswer_4 }}</center></li>
             <td><center>{{ one.comment }}</center></li>
             <td><center><a href="{% url 'delete' one.id %}"><div class="bg-warning rounded">Delete</div></a></center></td>
             </tr>

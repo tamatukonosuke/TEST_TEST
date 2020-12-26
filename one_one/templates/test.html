@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% block title %}
+  To-Do one
+{% endblock %}
+{% block content %}
+
+
+   
+    <h3><p id="dai_naomon"></p></h3>
+    <h2><div id="curennt_question"></div></h2>
+
+    <div id="sample">
+        <div id="curennt_answer" onclick="correct();MyFunction1();shuffle()" class="Button-style"></div><br>
+        <div id="curennt_dAnswer_2" onclick="incorrect();MyFunction1();shuffle()" class="Button-style"></div><br>
+        <div id="curennt_dAnswer_3" onclick="incorrect();MyFunction1();shuffle()" class="Button-style"></div><br>
+        <div id="curennt_dAnswer_4" onclick="incorrect();MyFunction1();shuffle()" class="Button-style"></div>
+    </div>
+
+    <p><br></p>
+
+   
+
+
+
+    <script>
+        
+        s=0
+        q_number=0
+        dai_naomon=1
+        document.getElementById('dai_naomon').innerHTML = "第" +dai_naomon+"問題"
+        console.log(q_number)
+        testFlug=true
+        resultFlug= false
+        correct_count=0
+        incorrect_count=0
+        n=0
+        const data = JSON.parse('{{ json_five_data|safe }}');
+       
+        curennt_question=data[n]["fields"]["question"]
+        curennt_answer=data[n]["fields"]["answer"]
+        curennt_dAnswer_2=data[n]["fields"]["dAnswer_2"]
+        curennt_dAnswer_3=data[n]["fields"]["dAnswer_3"]
+        curennt_dAnswer_4=data[n]["fields"]["dAnswer_4"]
+        
+
+        //var str = curennt_question;
+        document.getElementById('curennt_question').innerHTML = curennt_question ;
+        document.getElementById('curennt_answer').innerHTML = curennt_answer ;
+        document.getElementById('curennt_dAnswer_2').innerHTML = curennt_dAnswer_2 ;
+        document.getElementById('curennt_dAnswer_3').innerHTML = curennt_dAnswer_3 ;
+        document.getElementById('curennt_dAnswer_4').innerHTML = curennt_dAnswer_4 ;
+       // document.getElementById('curennt_question').innerHTML = str ;
+       
+       correct_answer=document.getElementById('curennt_answer').innerHTML
+       //最初は正解が一番上になってしまう問題
+
+        function MyFunction1() {
+            
+            n += 1
+            curennt_question=data[n]["fields"]["question"]
+            curennt_answer=data[n]["fields"]["answer"]
+            curennt_dAnswer_2=data[n]["fields"]["dAnswer_2"]
+            curennt_dAnswer_3=data[n]["fields"]["dAnswer_3"]
+            curennt_dAnswer_4=data[n]["fields"]["dAnswer_4"]
+            
+
+            //var str = curennt_question;
+            document.getElementById('curennt_question').innerHTML = curennt_question ;
+            document.getElementById('curennt_answer').innerHTML = curennt_answer ;
+            document.getElementById('curennt_dAnswer_2').innerHTML = curennt_dAnswer_2 ;
+            document.getElementById('curennt_dAnswer_3').innerHTML = curennt_dAnswer_3 ;
+            document.getElementById('curennt_dAnswer_4').innerHTML = curennt_dAnswer_4 ;
+        }
+
+        
+
+        function shuffle() {
+            correct_answer=document.getElementById('curennt_answer').innerHTML
+            var arr = [];
+            $("#sample div").each(function() {
+                arr.push($(this).html());
+            });
+            arr.sort(function() {
+                return Math.random() - Math.random();
+            });
+            $("#sample").empty();
+            s=1
+            for(i=0; i < arr.length; i++) {
+                //正解
+                
+                if (correct_answer==arr[i]) {
+                    $("#sample").append('<div id=curennt_answer class="Button-style" onclick="correct();MyFunction1();shuffle()" >' + arr[i] + '</div>' + '<br>');
+                //不正解
+                }else{
+                    s+=1
+                    if(s==5) {
+                        alert("終了しました！"+correct_count+"/5問正解です")
+                    }else{
+                        $("#sample").append('<div id="curennt_dAnswer_' + s + '"class="Button-style" onclick="incorrect();MyFunction1();shuffle()">' + arr[i] + '</div>' + '<br>');
+                    }
+                }
+            }
+        }
+        function correct() {
+            
+            correct_count+=1
+            q_number+=1
+            console.log(q_number)
+            dai_naomon+=1
+            let music = new Audio();
+            music.preload = "auto";
+            music.src = 'static/audio/correct_audio.mp3'
+            music.load();
+            music.play();
+            
+            document.getElementById('dai_naomon').innerHTML = "第" +dai_naomon+"問題"
+            if(q_number==5){
+                document.getElementById('dai_naomon').innerHTML = ""
+                document.getElementById('curennt_question').innerHTML = "終了しました！"+correct_count+"/5問題正解です。"  ;
+                finish()
+
+            }
+            alert("正解！")
+        }
+       
+
+        function incorrect(){
+            let music = new Audio();
+            music.preload = "auto";
+            music.src = 'static/audio/incorrect_audio.mp3'
+            music.load();
+            music.play();
+            
+            incorrect_count+=1
+            q_number+=1
+            console.log(q_number)
+            dai_naomon+=1
+            document.getElementById('dai_naomon').innerHTML = "第" +dai_naomon+"問題"
+            if(q_number==5){
+                document.getElementById('dai_naomon').innerHTML = ""
+               　 document.getElementById('curennt_question').innerHTML = "終了しました！"+correct_count+"/5問題正解です。"  ;
+                finish()
+               
+            }
+            alert("不正解")
+        }
+
+        function finish() {
+            correct_answer=document.getElementById('curennt_answer').innerHTML
+            var arr = [];
+            $("#sample div").each(function() {
+                arr.push($(this).html());
+            });
+            arr.sort(function() {
+                return Math.random() - Math.random();
+            });
+            $("#sample").empty();
+            s=1
+            for(i=0; i < arr.length; i++) {
+                //正解
+                
+                if (correct_answer==arr[i]) {
+                    $("#sample").append('');
+                //不正解
+                }else{
+                    s+=1
+                    if(s==5) {
+                        alert("終了しました！"+correct_count+"/5問正解です")
+                    }else{
+                        $("#sample").append('');
+                    }
+                }
+            }
+        }
+
+    </script>
+
+
+
+{% endblock %}
