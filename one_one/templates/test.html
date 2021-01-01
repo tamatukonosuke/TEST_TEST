@@ -8,6 +8,7 @@
    
     <h3><p id="dai_naomon"></p></h3>
     <h2><div id="curennt_question"></div></h2>
+    <h2><div id="return"></div></h2>
 
     <div id="sample">
         <div id="curennt_answer" onclick="correct();MyFunction1();shuffle()" class="Button-style"></div><br>
@@ -138,8 +139,8 @@
             document.getElementById('dai_naomon').innerHTML = "第" +dai_naomon+"問題"
             if(q_number==5){
                 document.getElementById('dai_naomon').innerHTML = ""
-               　 document.getElementById('curennt_question').innerHTML = "終了しました！"+correct_count+"/5問題正解です。"  ;
-                finish()
+               　document.getElementById('curennt_question').innerHTML = "終了しました！"+correct_count+"/5問題正解です。"  ;
+                finish()//ここ
                
             }
             alert("不正解")

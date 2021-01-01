@@ -34,16 +34,22 @@ def delete(request, one_id):
     return redirect('home')
 
 def edit(request, one_id):
+    print(2)
     if request.method == 'POST':
+        print(3)
         instance = one.objects.get(pk=one_id)
+        print(6)
         form = oneForm(request.POST or None, instance=instance)
+        print(5)
 
         if form.is_valid():
+            print(1)
             form.save()
             all_items = one.objects.all
             messages.success(request, ('Item Has Been Edited!'))
-            return redirect('home')
+            return render(request, 'home.html', {'all_items': all_items})
     else:
+        print(4)
         instance = one.objects.get(pk=one_id)
         return render(request, 'edit.html', {'item': instance})
 
