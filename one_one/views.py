@@ -5,6 +5,14 @@ from django.contrib import messages
 import json
 from django.core import serializers
 
+from django.contrib.auth.models import User
+from rest_framework import generics, permissions
+
+
+from .models import one
+from .serializers import UserSerializer, oneSerializer
+
+
 def home(request):
 
     if request.method == 'POST':
@@ -74,3 +82,47 @@ def test(request):
         post_list = serializers.serialize('json', s)
         print(s)
         return render(request, 'test.html', {'json_five_data': post_list})
+
+
+
+#以下userのapi
+
+
+class UserList(generics.ListAPIView):
+    """ View to list all users"""
+    queryset = User.objects.all().order_by('username')
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class UserCreate(generics.CreateAPIView):
+    """ View to create a new user. Only accepts POST requests """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAdminUser, )
+
+
+class UserRetrieveUpdate(generics.RetrieveUpdateAPIView):
+    """ Retrieve a user or update user information.
+    Accepts GET and PUT requests and the record id must be provided in the request """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+
+#以下oneのapi
+
+class OneListCreate(generics.CreateAPIView):
+    """ View to create a new one. Only accepts POST requests """
+    print("検証1")
+    queryset = one.objects.all()
+    serializer_class = oneSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+
+class oneRetrieveUpdate(generics.RetrieveUpdateAPIView):
+    """ Retrieve a one or update one information.
+    Accepts GET and PUT requests and the record id must be provided in the request """
+    queryset = one.objects.all()
+    serializer_class = oneSerializer
+    permission_classes = (permissions.IsAuthenticated, )
